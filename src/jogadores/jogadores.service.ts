@@ -47,7 +47,7 @@ export class JogadoresService {
 
     async consultarJogadoresPeloId(_id: string): Promise<Jogador> {
         try {
-            const jogador = await this.jogadorModel.findOne({_id}).populate('categoria').exec();
+            const jogador = await this.jogadorModel.findOne({_id}).exec();
             if(!jogador){
                 throw new NotFoundException(`Jogador com id ${_id} não encontrado`)
             }
@@ -60,7 +60,7 @@ export class JogadoresService {
 
     async consultarTodosJogadores(): Promise<Jogador[]> {
         try{
-            return await this.jogadorModel.find().populate('categoria').exec();
+            return await this.jogadorModel.find().exec();
         } catch(error){
             this.logger.error(`error: ${JSON.stringify(error.message)}`)
             throw new RpcException(error.message);

@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { JogadorSchema } from './jogadores/interfaces/jogador.schema';
 import { CategoriasModule } from './categorias/categorias.module';
 import { JogadoresModule } from './jogadores/jogadores.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -13,6 +14,9 @@ import { JogadoresModule } from './jogadores/jogadores.module';
       useCreateIndex: true,
       useUnifiedTopology: true,
       useFindAndModify: false
+    }),
+    ConfigModule.forRoot({
+      isGlobal:true
     }),
     CategoriasModule,
     JogadoresModule
