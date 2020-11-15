@@ -45,6 +45,19 @@ export class JogadoresService {
         }
     }
 
+    async consultarJogadoresPeloEmail(email: string): Promise<Jogador> {
+        try {
+            const jogador = await this.jogadorModel.findOne({email}).populate('categoria').exec();
+            if(!jogador){
+                throw new NotFoundException(`Jogador com email ${email} não encontrado`)
+            }
+            return jogador
+        } catch(error){
+            this.logger.error(`error: ${JSON.stringify(error.message)}`)
+            throw new RpcException(error.message);
+        }
+    }
+
     async consultarJogadoresPeloId(_id: string): Promise<Jogador> {
         try {
             const jogador = await this.jogadorModel.findOne({_id}).exec();

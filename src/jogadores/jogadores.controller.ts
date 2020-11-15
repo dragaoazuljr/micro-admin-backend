@@ -32,6 +32,21 @@ export class JogadoresController {
         }
     }
 
+    @MessagePattern('consultar-jogador-email')
+    async consultarJogadrEmail(
+        @Payload() email: string,
+        @Ctx() context: RmqContext
+    ) {
+        const channel = context.getChannelRef();
+        const originalMessage = context.getMessage();
+
+        try {
+            return await this._jogadoresService.consultarJogadoresPeloEmail(email);
+        } finally{
+            channel.ack(originalMessage);
+        }
+    }
+
     @MessagePattern('consultar-jogador')
     async consultarJogador(
         @Payload() _id: string,
